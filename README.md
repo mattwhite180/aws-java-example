@@ -1,7 +1,7 @@
 # aws-java-example
 
 ## Useful links
-* [setting up the AWS SDK with gradle](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-project-gradle.html)
+* [setting up the AWS SDK with gradle](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/setup-project-gradle.html)
 
 
 This program has the following java program called `HelloWorld.java`:

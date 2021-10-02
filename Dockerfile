@@ -1,5 +1,5 @@
 # FROM amazoncorretto:11
-FROM gradle:7.2.0-jdk8
+FROM java:8
 
 WORKDIR /app
 
@@ -10,6 +10,8 @@ WORKDIR /app
 
 # COPY HelloWorld.java .
 COPY src/ /app
+
+RUN ./gradlew buildDependents
 
 RUN ./gradlew build
 
