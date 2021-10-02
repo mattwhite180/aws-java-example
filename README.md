@@ -1,8 +1,19 @@
 # HOW TO CREATE YOUR GRADLE PROJECT WITH AWS SDK
+================================================
+
+
+# AWS JAVA SDK V1 vs V2
+This project is an example of using version 2 of the Java AWS SDK.
+
+When you are looking at the aws docs and see examples using `import com.amazonaws.XXXX...;`,
+that is version 1 of the Java AWS SDK. Version 2 of Java AWS SDK looks something like `import software.amazon.awssdk.XXX...`
+
+Find the `v1` in the URL of the page (example: https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-s3-buckets.html) and change it to `latest` (example: https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-s3-buckets.html)
+
 
 1. How I setup gradle:
 
-* please use the latest/greatest version of gradle and docker
+* please use the latest version of gradle and docker
 
 ```
 [$]: gradle init
@@ -120,13 +131,6 @@ See `Dockerfile` in project
 ### NICE ONE-LINER:
 `docker build -t javatest . && docker run -it javatest`
 
-# AWS JAVA SDK V1 vs V2
-This project is an example of using version 2 of the Java AWS SDK.
-
-When you are looking at the aws docs and see examples using `import com.amazonaws.regions.Regions;`,
-that is version 1 of the Java AWS SDK
-
-Find the `v1` in the URL of the page (example: https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-s3-buckets.html) and change it to `latest` (example: https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-s3-buckets.html)
 
 # USING AWS CREDENTIALS WITH DOCKER
 AWS projects that use AWS resources will require that you setup your AWS credentials. To give your Docker project access to your aws credentials, you need to mount your `.aws` folder in your home directory as a volume in your docker image:
