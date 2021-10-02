@@ -1,75 +1,6 @@
-# aws-java-example
+# HOW TO CREATE YOUR GRADLE PROJECT WITH AWS SDK
 
-## Useful links
-* [setting up the AWS SDK with gradle](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/setup-project-gradle.html)
-
-
-This program has the following java program called `HelloWorld.java`:
-```JAVA
-package HelloWorld;
-
-import software.amazon.awssdk.services.ec2.Ec2Client;
-import software.amazon.awssdk.services.ec2.model.DescribeRegionsResponse;
-import software.amazon.awssdk.services.ec2.model.Region;
-import software.amazon.awssdk.services.ec2.model.AvailabilityZone;
-import software.amazon.awssdk.services.ec2.model.Ec2Exception;
-import software.amazon.awssdk.services.ec2.model.DescribeAvailabilityZonesResponse;
-
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-    }
-}
-
-```
-
-The `import` statements will throw the following errors if you don't have the AWS SDK installed:
-```
-[$]: ./gradlew run
-
-> Task :app:compileJava FAILED
-/home/mattw/aws-java-example/src/app/src/main/java/HelloWorld/App.java:6: error: package software.amazon.awssdk.services.ec2 does not exist
-import software.amazon.awssdk.services.ec2.Ec2Client;
-                                          ^
-/home/mattw/aws-java-example/src/app/src/main/java/HelloWorld/App.java:7: error: package software.amazon.awssdk.services.ec2.model does not exist
-import software.amazon.awssdk.services.ec2.model.DescribeRegionsResponse;
-                                                ^
-/home/mattw/aws-java-example/src/app/src/main/java/HelloWorld/App.java:8: error: package software.amazon.awssdk.services.ec2.model does not exist
-import software.amazon.awssdk.services.ec2.model.Region;
-                                                ^
-/home/mattw/aws-java-example/src/app/src/main/java/HelloWorld/App.java:9: error: package software.amazon.awssdk.services.ec2.model does not exist
-import software.amazon.awssdk.services.ec2.model.AvailabilityZone;
-                                                ^
-/home/mattw/aws-java-example/src/app/src/main/java/HelloWorld/App.java:10: error: package software.amazon.awssdk.services.ec2.model does not exist
-import software.amazon.awssdk.services.ec2.model.Ec2Exception;
-                                                ^
-/home/mattw/aws-java-example/src/app/src/main/java/HelloWorld/App.java:11: error: package software.amazon.awssdk.services.ec2.model does not exist
-import software.amazon.awssdk.services.ec2.model.DescribeAvailabilityZonesResponse;
-                                                ^
-6 errors
-
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Execution failed for task ':app:compileJava'.
-> Compilation failed; see the compiler error output for details.
-
-* Try:
-Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
-
-* Get more help at https://help.gradle.org
-
-BUILD FAILED in 1s
-1 actionable task: 1 executed
-```
-
-Run the Docker project:
-
-
+1. How I setup gradle:
 ```
 [$]: gradle init
 
@@ -115,3 +46,81 @@ Get more help with your project: https://docs.gradle.org/7.2/samples/sample_buil
 BUILD SUCCESSFUL in 34s
 2 actionable tasks: 2 executed
 ```
+
+2. [Adding AWS SDK as a dependency to gradle](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/setup-project-gradle.html)
+
+3. go into the `build.gradle` and add the aws components you need:
+```GRADLE
+dependencies {
+    // AWS SDK
+    implementation platform('software.amazon.awssdk:bom:2.15.0')
+    implementation 'software.amazon.awssdk:ec2' // <-- example here
+    implementation 'software.amazon.awssdk:s3' // <-- example here
+    implementation 'software.amazon.awssdk:regions' // <-- example here
+
+    // Use JUnit test framework.
+    testImplementation 'junit:junit:4.13.2'
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:30.1.1-jre'
+}
+```
+
+Go to [THIS](https://mvnrepository.com/artifact/software.amazon.awssdk/bom/2.17.50) page to see other AWS services you can add to gradle
+
+# Testing your project
+
+I added some AWS imports in the `src/app/src/main/java/HelloWorld/App.java` file to test if our app installs the AWS SDK properly:
+```JAVA
+package HelloWorld;
+
+import software.amazon.awssdk.core.waiters.WaiterResponse;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.*;
+import software.amazon.awssdk.services.s3.waiters.S3Waiter;
+
+import java.util.List;
+
+public class App {
+    public String getGreeting() {
+        return "Hello World!";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new App().getGreeting());
+    }
+}
+```
+
+To build your project, run the following commands:
+* `./gradlew buildDependents`
+    * this command will download and install the AWS SDK into your project
+* `./gradlew build` 
+    * this command builds your project
+* `./gradlew check`
+    * this command... does something?
+* `./gradlew test`
+    * this command runs your unit test in `src/app/src/test/java/HelloWorld/AppTest.java`
+* `./gradlew run`
+    * this command runs your project
+
+# DOCKER!
+See `Dockerfile` in project
+
+### TURN THE DOCKERFILE INTO A DOCKER IMAGE
+`docker build -t javatest .`
+
+### RUN THE DOCKER IMAGE
+`docker run -it javatest`
+
+### NICE ONE-LINER:
+`docker build -t javatest . && docker run -it javatest`
+
+# AWS JAVA SDK V1 vs V2
+This project is an example of using version 2 of the Java AWS SDK.
+
+When you are looking at the aws docs and see examples using `import com.amazonaws.regions.Regions;`,
+that is version 1 of the Java AWS SDK
+
+Find the `v1` in the URL of the page (example: https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-s3-buckets.html) and change it to `latest` (example: https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-s3-buckets.html)

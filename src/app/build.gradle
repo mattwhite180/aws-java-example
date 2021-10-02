@@ -22,6 +22,23 @@ dependencies {
     // AWS SDK
     implementation platform('software.amazon.awssdk:bom:2.15.0')
     implementation 'software.amazon.awssdk:ec2'
+    implementation 'software.amazon.awssdk:s3'
+    implementation 'software.amazon.awssdk:regions'
+    implementation 'software.amazon.awssdk:sdk-core'
+    // implementation 'software.amazon.awssdk:apigateway'
+    // implementation 'software.amazon.awssdk:cloud9'
+    // implementation 'software.amazon.awssdk:cloudtrail'
+    // implementation 'software.amazon.awssdk:cloudtrail'
+    // implementation 'software.amazon.awssdk:cloudwatch'
+    // implementation 'software.amazon.awssdk:ecr'
+    // implementation 'software.amazon.awssdk:elasticbeanstalk'
+    // implementation 'software.amazon.awssdk:elasticloadbalancing'
+    // implementation 'software.amazon.awssdk:lambda'
+    // implementation 'software.amazon.awssdk:s3control'
+    // implementation 'software.amazon.awssdk:sqs'
+    // implementation 'software.amazon.awssdk:dynamodb'
+    // implementation 'software.amazon.awssdk:dynamodb-enhanced'
+
     // testCompile group: 'junit', name: 'junit', version: '4.11'
 
     // Use JUnit test framework.

@@ -1,11 +1,12 @@
 package HelloWorld;
 
-import software.amazon.awssdk.services.ec2.Ec2Client;
-import software.amazon.awssdk.services.ec2.model.DescribeRegionsResponse;
-import software.amazon.awssdk.services.ec2.model.Region;
-import software.amazon.awssdk.services.ec2.model.AvailabilityZone;
-import software.amazon.awssdk.services.ec2.model.Ec2Exception;
-import software.amazon.awssdk.services.ec2.model.DescribeAvailabilityZonesResponse;
+import software.amazon.awssdk.core.waiters.WaiterResponse;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.*;
+import software.amazon.awssdk.services.s3.waiters.S3Waiter;
+
+import java.util.List;
 
 public class App {
     public String getGreeting() {
