@@ -1,11 +1,20 @@
-FROM amazoncorretto:11
+# FROM amazoncorretto:11
+FROM gradle:7.2.0-jdk8
 
-RUN apt update && apt install -y wget unzip
+WORKDIR /app
 
-RUN wget https://sdk-for-java.amazonwebservices.com/latest/aws-java-sdk.zip
-RUN unzip aws-java-sdk.zip
+# RUN yum install -y wget unzip
 
-COPY HelloWorld.java .
+# RUN wget https://sdk-for-java.amazonwebservices.com/latest/aws-java-sdk.zip
+# RUN unzip aws-java-sdk.zip
 
-RUN javac HelloWorld.java
-CMD ["java", "HelloWorld"] 
+# COPY HelloWorld.java .
+COPY src/ /app
+
+RUN ./gradlew build
+
+RUN ./gradlew check
+RUN ./gradlew test
+
+# RUN ./gradlew 
+CMD ["./gradlew", "run"] 
